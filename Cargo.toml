@@ -19,6 +19,18 @@ opt-level = 'z'
 codegen-units = 1
 
 [features]
+std = ["secp256k1", "secp256k1/global-context"]
+default = ["std"]
+global-context = ["std", "secp256k1/global-context"]
+
+
+[dependencies.secp256k1]
+version = "0.28"
+optional = true
 
 [dependencies]
-secp256k1 = "0.28"
+hex = "0.4"
+sha2 = "0.10"
+ripemd = "0.1"
+bs58 = { version = "0.5", features = ["check"] }
+hmac = "0.12"

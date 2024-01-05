@@ -1,5 +1,12 @@
 {
     "cSpell.words": [
-        "hdkey"
+        "hasher",
+        "hdkey",
+        "hmac",
+        "ripemd",
+        "secp",
+        "secp256k1",
+        "xpriv",
+        "xpub"
     ]
 }
