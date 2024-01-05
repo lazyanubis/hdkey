@@ -441,8 +441,7 @@ impl HDKey {
     pub fn sign(&self, hash: &[u8]) -> Result<[u8; 64], Error> {
         #[allow(clippy::unwrap_used)] // ? checked
         let private_key = secp256k1::SecretKey::from_slice(&self.private_key.unwrap())?;
-        let signature =
-            private_key.sign_ecdsa(secp256k1::Message::from_digest_slice(hash).unwrap());
+        let signature = private_key.sign_ecdsa(secp256k1::Message::from_digest_slice(hash)?);
         Ok(signature.serialize_compact())
     }
 
