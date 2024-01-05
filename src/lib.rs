@@ -2,7 +2,9 @@
 #![deny(clippy::expect_used)]
 #![deny(clippy::panic)]
 
-use secp256k1::{Error, PublicKey, Secp256k1, SecretKey};
+use secp256k1::{PublicKey, Secp256k1, SecretKey};
+
+pub use secp256k1::Error;
 
 const MASTER_SECRET: &[u8] = b"Bitcoin seed";
 const HARDENED_OFFSET: u32 = 0x80000000;
