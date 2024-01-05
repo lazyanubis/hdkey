@@ -437,7 +437,7 @@ impl HDKey {
         }
     }
 
-    // #[cfg(feature = "global-context")]
+    #[cfg(feature = "global-context")]
     pub fn sign(&self, hash: &[u8]) -> Result<[u8; 64], Error> {
         #[allow(clippy::unwrap_used)] // ? checked
         let private_key = secp256k1::SecretKey::from_slice(&self.private_key.unwrap())?;

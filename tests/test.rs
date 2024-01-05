@@ -469,8 +469,7 @@ mod tests {
         let _ = hdkey.derive("123");
     }
 
-    // TODO 怎么开启测试？
-    // #[cfg(feature = "global-context")]
+    #[cfg(feature = "global-context")]
     #[test]
     fn test4() {
         it(&format!("{} : {}", "> when signing", "should work"), || {
