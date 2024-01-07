@@ -92,9 +92,9 @@ mod tests {
             let hdkey = HDKey::from_master_seed(&hex::decode(case.seed).unwrap(), None).unwrap();
             let child = hdkey.derive(case.path).unwrap();
 
-            assert_eq!(child.get_public_extended_key(), case.public);
+            assert_eq!(child.public_extended_key(), case.public);
             assert_eq!(
-                child.get_private_extended_key(),
+                child.private_extended_key(),
                 Some(case.private).map(|s| s.into())
             );
 
@@ -144,15 +144,15 @@ mod tests {
                     "9452b549be8cea3ecb7a84bec10dcfd94afe4d129ebfd3b3cb58eedf394ed271"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_private_key().unwrap()),
+                    hex::encode(hdkey.private_key().unwrap()),
                     "bb7d39bdb83ecf58f2fd82b6d918341cbef428661ef01ab97c28a4842125ac23"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_public_key()),
+                    hex::encode(hdkey.public_key()),
                     "024d902e1a2fc7a8755ab5b694c575fce742c48d9ff192e63df5193e4c7afe1f9c"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_identifier()),
+                    hex::encode(hdkey.identifier()),
                     "26132fdbe7bf89cbc64cf8dafa3f9f88b8666220"
                 );
             },
@@ -174,15 +174,15 @@ mod tests {
                     "9452b549be8cea3ecb7a84bec10dcfd94afe4d129ebfd3b3cb58eedf394ed271"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_private_key().unwrap()),
+                    hex::encode(hdkey.private_key().unwrap()),
                     "bb7d39bdb83ecf58f2fd82b6d918341cbef428661ef01ab97c28a4842125ac23"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_public_key()),
+                    hex::encode(hdkey.public_key()),
                     "024d902e1a2fc7a8755ab5b694c575fce742c48d9ff192e63df5193e4c7afe1f9c"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_identifier()),
+                    hex::encode(hdkey.identifier()),
                     "26132fdbe7bf89cbc64cf8dafa3f9f88b8666220"
                 );
             },
@@ -203,13 +203,13 @@ mod tests {
                     hex::encode(hdkey.chain_code()),
                     "9452b549be8cea3ecb7a84bec10dcfd94afe4d129ebfd3b3cb58eedf394ed271"
                 );
-                assert_eq!(hdkey.get_private_key(), None);
+                assert_eq!(hdkey.private_key(), None);
                 assert_eq!(
-                    hex::encode(hdkey.get_public_key()),
+                    hex::encode(hdkey.public_key()),
                     "024d902e1a2fc7a8755ab5b694c575fce742c48d9ff192e63df5193e4c7afe1f9c"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_identifier()),
+                    hex::encode(hdkey.identifier()),
                     "26132fdbe7bf89cbc64cf8dafa3f9f88b8666220"
                 );
             },
@@ -233,13 +233,13 @@ mod tests {
                     hex::encode(hdkey.chain_code()),
                     "9452b549be8cea3ecb7a84bec10dcfd94afe4d129ebfd3b3cb58eedf394ed271"
                 );
-                assert_eq!(hdkey.get_private_key(), None);
+                assert_eq!(hdkey.private_key(), None);
                 assert_eq!(
-                    hex::encode(hdkey.get_public_key()),
+                    hex::encode(hdkey.public_key()),
                     "024d902e1a2fc7a8755ab5b694c575fce742c48d9ff192e63df5193e4c7afe1f9c"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_identifier()),
+                    hex::encode(hdkey.identifier()),
                     "26132fdbe7bf89cbc64cf8dafa3f9f88b8666220"
                 );
             },
@@ -255,7 +255,7 @@ mod tests {
                 let derived = hdkey.derive(path).unwrap();
 
                 let expected = "xpub6JdKdVJtdx6sC3nh87pDvnGhotXuU5Kz6Qy7Piy84vUAwWSYShsUGULE8u6gCivTHgz7cCKJHiXaaMeieB4YnoFVAsNgHHKXJ2mN6jCMbH1";
-                assert_eq!(derived.get_public_extended_key(), expected)
+                assert_eq!(derived.public_extended_key(), expected)
             },
         );
 
@@ -271,7 +271,7 @@ mod tests {
 
                 let new_key = master_key.derive("m/44'/6'/4'").unwrap();
                 let expected = "xprv9ymoag6W7cR6KBcJzhCM6qqTrb3rRVVwXKzwNqp1tDWcwierEv3BA9if3ARHMhMPh9u2jNoutcgpUBLMfq3kADDo7LzfoCnhhXMRGX3PXDx";
-                assert_eq!(new_key.get_private_extended_key().unwrap(), expected);
+                assert_eq!(new_key.private_extended_key().unwrap(), expected);
             },
         );
 
@@ -285,12 +285,12 @@ mod tests {
                 let key= "xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr";
                 let hdkey = HDKey::from_extended_key(key, None, false).unwrap();
                 assert_eq!(
-                    hex::encode(hdkey.get_private_key().unwrap()),
+                    hex::encode(hdkey.private_key().unwrap()),
                     "00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd"
                 );
                 let derived = hdkey.derive("m/44'/0'/0'/0/0'").unwrap();
                 assert_eq!(
-                    hex::encode(derived.get_private_key().unwrap()),
+                    hex::encode(derived.private_key().unwrap()),
                     "3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb"
                 );
             },
@@ -307,14 +307,14 @@ mod tests {
                     HDKey::from_master_seed(&hex::decode(seed).unwrap(), None).unwrap();
 
                 assert!(
-                    master_key.get_private_extended_key().is_some(),
+                    master_key.private_extended_key().is_some(),
                     "xpriv is truthy"
                 );
 
                 master_key.wipe_private_data();
 
                 assert!(
-                    master_key.get_private_extended_key().is_none(),
+                    master_key.private_extended_key().is_none(),
                     "xpriv is falsy"
                 );
             },
@@ -359,11 +359,11 @@ mod tests {
                     "9452b549be8cea3ecb7a84bec10dcfd94afe4d129ebfd3b3cb58eedf394ed271"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_public_key()),
+                    hex::encode(hdkey.public_key()),
                     "024d902e1a2fc7a8755ab5b694c575fce742c48d9ff192e63df5193e4c7afe1f9c"
                 );
                 assert_eq!(
-                    hex::encode(hdkey.get_identifier()),
+                    hex::encode(hdkey.identifier()),
                     "26132fdbe7bf89cbc64cf8dafa3f9f88b8666220"
                 );
             },
@@ -379,7 +379,7 @@ mod tests {
                 let public_key = "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8";
                 let mut hdkey = HDKey::from_extended_key(public_key, None, false).unwrap();
                 hdkey.wipe_private_data();
-                assert_eq!(hdkey.get_public_extended_key(), public_key);
+                assert_eq!(hdkey.public_extended_key(), public_key);
             },
         );
 
@@ -392,33 +392,33 @@ mod tests {
             || {
                 let hdkey = HDKey::from_extended_key("xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi", None, false).unwrap();
                 let path = "m/123";
-                let private_key_before = hex::encode(hdkey.get_private_key().unwrap());
+                let private_key_before = hex::encode(hdkey.private_key().unwrap());
 
                 let child = hdkey.derive(path).unwrap();
                 assert_eq!(
-                    hex::encode(hdkey.get_private_key().unwrap()),
+                    hex::encode(hdkey.private_key().unwrap()),
                     private_key_before
                 );
 
                 let child2 = hdkey.derive(path).unwrap();
                 assert_eq!(
-                    hex::encode(hdkey.get_private_key().unwrap()),
+                    hex::encode(hdkey.private_key().unwrap()),
                     private_key_before
                 );
 
                 let child3 = hdkey.derive(path).unwrap();
                 assert_eq!(
-                    hex::encode(hdkey.get_private_key().unwrap()),
+                    hex::encode(hdkey.private_key().unwrap()),
                     private_key_before
                 );
 
                 assert_eq!(
-                    hex::encode(child.get_private_key().unwrap()),
-                    hex::encode(child2.get_private_key().unwrap())
+                    hex::encode(child.private_key().unwrap()),
+                    hex::encode(child2.private_key().unwrap())
                 );
                 assert_eq!(
-                    hex::encode(child2.get_private_key().unwrap()),
-                    hex::encode(child3.get_private_key().unwrap())
+                    hex::encode(child2.private_key().unwrap()),
+                    hex::encode(child3.private_key().unwrap())
                 );
             },
         );
@@ -434,24 +434,24 @@ mod tests {
                 let path = "m/123/123/123";
                 hdkey.wipe_private_data();
 
-                let public_key_before = hex::encode(hdkey.get_public_key());
+                let public_key_before = hex::encode(hdkey.public_key());
 
                 let child = hdkey.derive(path).unwrap();
-                assert_eq!(hex::encode(hdkey.get_public_key()), public_key_before);
+                assert_eq!(hex::encode(hdkey.public_key()), public_key_before);
 
                 let child2 = hdkey.derive(path).unwrap();
-                assert_eq!(hex::encode(hdkey.get_public_key()), public_key_before);
+                assert_eq!(hex::encode(hdkey.public_key()), public_key_before);
 
                 let child3 = hdkey.derive(path).unwrap();
-                assert_eq!(hex::encode(hdkey.get_public_key()), public_key_before);
+                assert_eq!(hex::encode(hdkey.public_key()), public_key_before);
 
                 assert_eq!(
-                    hex::encode(child.get_public_key()),
-                    hex::encode(child2.get_public_key())
+                    hex::encode(child.public_key()),
+                    hex::encode(child2.public_key())
                 );
                 assert_eq!(
-                    hex::encode(child2.get_public_key()),
-                    hex::encode(child3.get_public_key())
+                    hex::encode(child2.public_key()),
+                    hex::encode(child3.public_key())
                 );
             },
         );
@@ -510,17 +510,17 @@ mod tests {
                 )
                 .unwrap();
                 hdkey.wipe_private_data();
-                assert_eq!(hdkey.get_private_key(), None);
-                assert_eq!(hdkey.get_private_extended_key(), None);
+                assert_eq!(hdkey.private_key(), None);
+                assert_eq!(hdkey.private_extended_key(), None);
                 assert!(std::panic::catch_unwind(|| {
                     let _ = hdkey.sign(&[0; 32]);
                 })
                 .is_err());
                 // assert.throws(() => hdkey.sign(Buffer.alloc(32)), "shouldn't be able to sign")
                 let child = hdkey.derive("m/0").unwrap();
-                assert_eq!(child.get_public_extended_key(), "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH");
-                assert_eq!(child.get_private_key(), None);
-                assert_eq!(child.get_private_extended_key(), None);
+                assert_eq!(child.public_extended_key(), "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH");
+                assert_eq!(child.private_key(), None);
+                assert_eq!(child.private_extended_key(), None);
             },
         );
 

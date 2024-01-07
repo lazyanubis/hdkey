@@ -261,23 +261,23 @@ impl HDKey {
         }
     }
 
-    pub fn get_fingerprint(&self) -> u32 {
+    pub fn fingerprint(&self) -> u32 {
         self.fingerprint
     }
 
-    pub fn get_identifier(&self) -> [u8; 20] {
+    pub fn identifier(&self) -> [u8; 20] {
         self.identifier
     }
 
-    pub fn get_public_key_hash(&self) -> [u8; 20] {
+    pub fn public_key_hash(&self) -> [u8; 20] {
         self.identifier
     }
 
-    pub fn get_private_key(&self) -> Option<[u8; 32]> {
+    pub fn private_key(&self) -> Option<[u8; 32]> {
         self.private_key
     }
 
-    pub fn get_public_key(&self) -> [u8; 33] {
+    pub fn public_key(&self) -> [u8; 33] {
         self.public_key
     }
 
@@ -324,7 +324,7 @@ impl HDKey {
         bytes
     }
 
-    pub fn get_private_extended_key(&self) -> Option<String> {
+    pub fn private_extended_key(&self) -> Option<String> {
         self.private_key.map(|private_key| {
             let mut key = [0; 33];
             key[1..].copy_from_slice(&private_key);
@@ -337,7 +337,7 @@ impl HDKey {
         })
     }
 
-    pub fn get_public_extended_key(&self) -> String {
+    pub fn public_extended_key(&self) -> String {
         bs58::encode::EncodeBuilder::new(
             self.serialize(self.versions.public, &self.public_key),
             bs58::alphabet::Alphabet::DEFAULT,
@@ -463,10 +463,11 @@ impl HDKey {
 
     pub fn to_json(&self) -> HDKeyJson {
         HDKeyJson {
-            xpriv: self.get_private_extended_key(),
-            xpub: self.get_public_extended_key(),
+            xpriv: self.private_extended_key(),
+            xpub: self.public_extended_key(),
         }
     }
+
     pub fn from_json(json: HDKeyJson) -> Result<Self, CombinedError> {
         if let Some(xpriv) = json.xpriv {
             Self::from_extended_key(&xpriv, None, false)
